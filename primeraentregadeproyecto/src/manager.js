@@ -1,4 +1,4 @@
-import { ProductManager } from "./classes/ProductManager.js";
+import { ProductManager } from "../classes/ProductManager.js";
 import { __dirname } from "./utils.js";
 
 //const { ProductManager } = productManager;
