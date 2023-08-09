@@ -6,8 +6,7 @@ document.getElementById("productForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const productName = document.getElementById("productName").value;
   const productTitle = document.getElementById("productTitle").value;
-  const productDescription =
-    document.getElementById("productDescription").value;
+  const productDescription = document.getElementById("productDescription").value;
   const productPrice = document.getElementById("productPrice").value;
   const productThumbnail = document.getElementById("productThumbnail").value;
 
