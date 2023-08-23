@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
-const URI="mongodb+srv://lucaspedemonti91:lpdev@cluster0.h7kvhpc.mongodb.net/Ecommerce?retryWrites=true&w=majority"
-//const URI="mongodb+srv://carlosapolayasanchez:ensolver@cluster0.cbayzpv.mongodb.net/ecommerce?retryWrites=true&w=majority"
+const URI="mongodb+srv://lucaspedemonti91:lpdev@cluster0.h7kvhpc.mongodb.net/ecommerce"
+
 const connectToDB = () => {
     try {
         mongoose.connect(URI)

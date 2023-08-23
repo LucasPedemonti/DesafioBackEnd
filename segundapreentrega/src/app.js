@@ -1,6 +1,6 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
- import { Server } from 'socket.io';
+import { Server } from 'socket.io';
 import connectToDB from "./config/configServer.js"
 import {__dirname} from "./utils.js"
 

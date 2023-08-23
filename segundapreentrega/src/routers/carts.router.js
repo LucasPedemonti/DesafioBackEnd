@@ -24,23 +24,23 @@ routerC.get("/",async(req,res)=>{
 
  routerC.post('/', async (req, res) => {
    try {
-       const { obj } = req.body;
+      //  const  obj = req.body;
  
-       if (!Array.isArray(obj)) {
-           return res.status(400).send('Invalid request: products must be an array');
-       }
+      //  if (!Array.isArray(obj)) {
+      //      return res.status(400).send('Invalid request: products must be an array');
+      //  }
  
-       const validProducts = [];
+      //  const validProducts = [];
  
-       for (const product of obj) {
-           const checkId = await pm.getProductById(product._id);
-           if (checkId === null) {
-               return res.status(404).send(`Product with id ${product._id} not found`);
-           }
-           validProducts.push(checkId);
-       }
+      //  for (const product of obj) {
+      //      const checkId = await pm.getProductById(product._id);
+      //      if (checkId === null) {
+      //          return res.status(404).send(`Product with id ${product._id} not found`);
+      //      }
+      //      validProducts.push(checkId);
+      //  }
  
-       const cart = await cm.addCart(validProducts);
+       const cart = await cm.addCart();
        res.status(200).send(cart);
  
    } catch (err) {
@@ -70,7 +70,7 @@ routerC.get("/",async(req,res)=>{
          return res.status(404).send({ message: `Cart with ID: ${cid} not found` });
        }
    
-       const result = await cm.addProductInCart(cid, { _id: pid, quantity:quantity });
+       const result = await cm.addProductInCart(cid, { product: pid, quantity:quantity });
        console.log(result);
        return res.status(200).send({
          message: `Product with ID: ${pid} added to cart with ID: ${cid}`,
