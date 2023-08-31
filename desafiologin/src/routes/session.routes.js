@@ -1,6 +1,6 @@
 import { Router } from "express";
 import UserModel from "../models/user.model.js";
-import notifier from 'node-notifier';
+import Swal from 'sweetalert2';
 //import { auth } from "./middlewares.routes.js";
 
 const router = Router();
@@ -10,34 +10,42 @@ router.post("/login", async (req, res) => {
   const result = await UserModel.findOne({ email: username, password }).lean();
 
   // Validación para el usuario administrador
-  if (username === 'adminCoder@coder.com' && password === 'adminCod3r123') {
+  if (username === 'lucas@dev.com' && password === '123456') {
       req.session.user = {
       email: username,
       admin:true,
     };
 
-    notifier.notify({
-      title: 'Info',
-      message: 'Autenticación del administrador.',
-    });
-
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Your work has been saved',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
-
   if (!result) {
-    notifier.notify({
-      title: 'Info',
-      message: 'Error en la autenticación.'
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Error en la autenticación!',
+      
     });
+    
 
     return res.status(401).json({ respuesta: "Error de autenticación" });
   }
-  if (username !== 'adminCoder@coder.com' && password !== 'adminCod3r123'){ 
+  if (username !== 'lucas@dev.com' && password !== '123456'){ 
   req.session.user = {
     email: username,
     admin:false
   };
 }
   res.status(200).json({ respuesta: "Autenticado exitosamente" });
+});
+
+router.post("/signup", async (req, res) => {
+  const { username, password, first_name, last_name, age} = req.body;
 });
 
 
