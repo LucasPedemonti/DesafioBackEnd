@@ -1,15 +1,16 @@
 import passport from "passport";
 import local from "passport-local";
-import UserModel from "../dao/models/user.model.js";
+import UserModel from "../dao/mongo/models/user.model.js";
 import GitHubStrategy from "passport-github2";
 import { createHash,isValidPassword } from "../utils.js";
 import jwt, { ExtractJwt } from "passport-jwt";
 import * as dotenv from "dotenv";
-
+import crypto from 'crypto'
 
 dotenv.config();
 const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;
+
 
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;

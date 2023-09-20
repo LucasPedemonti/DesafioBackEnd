@@ -15,12 +15,8 @@ import FailLogin from "./routes/session.routes.js";
 import FailRegister from "./routes/session.routes.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
-import {
-  generateToken,
-  authToken,
-  passportCall,
-  authorization,
-} from "./utils.js";
+import CartRouter from "./routes/cart.routes.js";
+import UserRouter from "./routes/user.routes.js";
 
 
 import * as dotenv from "dotenv";
@@ -91,6 +87,10 @@ app.use("/forgot", ForgotRoute);
 app.use("/",FailLogin)
 app.use("/",FailRegister)
 
+//ENTREGA ARQUITECTURA POR CAPAS
+app.use("/api/products",ProductRouter)
+app.use("/cart",CartRouter);
+app.use("/user",UserRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);

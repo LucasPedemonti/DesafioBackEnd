@@ -1,4 +1,4 @@
-import cartModel from "../models/cart.js";
+/*import cartModel from "../models/cart.js";
 
 
 export default class Carts {
@@ -165,4 +165,4 @@ async addProductToCart(cid, pid) {
       throw error;
     }
   }
-}
+}*/

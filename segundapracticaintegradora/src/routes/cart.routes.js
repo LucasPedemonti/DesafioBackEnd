@@ -1,27 +1,32 @@
 import { Router } from "express";
 
-import Carts from "../dao/dbManagers/cartManager.js";
-import productsModel from "../dao/models/product.model.js";
-import Product from '../dao/dbManagers/productManager.js'; 
+//import Carts from "../dao/dbManagers/cartManager.js";
+import productsModel from "../dao/mongo/models/product.model.js";
+//import Product from '../dao/dbManagers/productManager.js'; 
+
+import { saveCart,getAllCarts } from "../controller/cart.controller.js";
 
 const router = Router();
-const cartsManager = new Carts();
+//const cartsManager = new Carts();
 
-const productsManager = new Product();
+//const productsManager = new Product();
 
+////////ENTREGA ARQUITECTURA DE CAPAS:////////////////
+router.get("/",getAllCarts);
+router.post("/",saveCart);
 
 // Mostrar el carrito
-router.get('/', async (req, res) => {
-  try {
-    const showCart = await cartsManager.getAll();
-    res.render('cart',{carts:showCart});
-  } catch (error) {
-    res.status(500).json({
-        message:"Error al mostrar el carrito",
-        error:error
-    });
-  }
-});
+// router.get('/', async (req, res) => {
+//   try {
+//     const showCart = await cartsManager.getAll();
+//     res.render('cart',{carts:showCart});
+//   } catch (error) {
+//     res.status(500).json({
+//         message:"Error al mostrar el carrito",
+//         error:error
+//     });
+//   }
+// });
 
 
 
@@ -48,19 +53,19 @@ router.get('/:cartId', async (req, res) => {
   
     
   // Crear un nuevo carrito
-  router.post('/', async (req, res) => {
-    const cartData = req.params;
-    try {
-      const newCart = await cartsManager.save(cartData);
+  // router.post('/', async (req, res) => {
+  //   const cartData = req.params;
+  //   try {
+  //     const newCart = await cartsManager.save(cartData);
   
-      res.json({message:"Carrito creado",data:newCart});
-    } catch (error) {
-        res.status(500).json({
-            message:"Error al crear el carrito",
-            error:error
-        });
-    }
-  });
+  //     res.json({message:"Carrito creado",data:newCart});
+  //   } catch (error) {
+  //       res.status(500).json({
+  //           message:"Error al crear el carrito",
+  //           error:error
+  //       });
+  //   }
+  // });
   
 //agregar producto al carrito, si ya existe lo incrementa quantity en 1, sino lo agrega
   router.post("/:cid/product/:pid", async (req, res) => {

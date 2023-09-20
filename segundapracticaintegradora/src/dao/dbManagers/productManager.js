@@ -1,4 +1,4 @@
-import productsModel from '../models/product.js';
+/*import productsModel from '../models/product.js';
 import notifier from 'node-notifier';
 
 export default class Products {
@@ -57,3 +57,4 @@ async getByAvailability(filter) {
     return deletedProduct;
   };
 }
+*/
