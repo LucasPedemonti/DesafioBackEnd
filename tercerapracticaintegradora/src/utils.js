@@ -7,7 +7,7 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 
 
-const PRIVATE_KEY = "CoderSecretKey";
+const PRIVATE_KEY = "CoderKeyQueNadieDebeSaber";
 
 export const generateToken = (user) => {
   const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "1h" });
