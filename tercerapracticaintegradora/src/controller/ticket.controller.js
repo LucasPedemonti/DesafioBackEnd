@@ -1,13 +1,14 @@
 import { TICKETDAO } from "../dao/index.js";
-
+import { USERDAO } from "../dao/index.js";
+import { PRODUCTDAO } from "../dao/index.js";
 
 //dependiendo si ticket esa en memory o en mongo llamo a class o memory
 async function saveTicket (req,res){
     const ticket= req.body;
     const user = req.user;
     await TICKETDAO.save(user);
-    res.send(ticket)
-    // res.render('finishPurchase',{ticket:ticket})
+    res.json(ticket)
+    //res.render('finishPurchase',{ticket:ticket})
     
 }
 
@@ -19,10 +20,17 @@ async function getAllTickets(req,res){
 
 async function getTicketById(req,res){
     const tid=req.params.tid;
-    const ticketId = await TICKETDAO.getTicketId(tid);
-    console.log(ticketId);
-    return ticketId;
+    const ticket = await TICKETDAO.getById(tid);
+    ticket._id = ticket._id.toString(); 
+    res.render('finishpurchase',ticket)
   
 }
 
-export {saveTicket,getAllTickets,getTicketById}
+async function getTicketByEmail(req,res){
+    const userEmail = req.user.user.user.email;
+    const ticket = await TICKETDAO.getByEmail(userEmail);
+    ticket._id = ticket._id.toString(); 
+    res.render('finishpurchase',ticket)
+  
+}
+export {saveTicket,getAllTickets,getTicketById,getTicketByEmail}

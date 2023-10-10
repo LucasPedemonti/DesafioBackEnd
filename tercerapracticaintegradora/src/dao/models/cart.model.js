@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const cartsCollection = 'Carts';
-
 const cartSchema = mongoose.Schema({
   products: {
     type: [
@@ -17,14 +16,29 @@ const cartSchema = mongoose.Schema({
     ],
     default: [],
   },
-  total:{
-    type:String}
+}, {
+  toJSON: { getters: true } // Habilita los getters al convertir a JSON
+});
+
+// Getter para calcular el total automáticamente
+cartSchema.virtual('total').get(function() {
+  let total = 0;
+  for (const product of this.products) {
+    total += product.quantity * product.product.price;
+  }
+  return total.toFixed(2); 
+});
+
+cartSchema.pre("getCartById", function () {
+  this.populate("products.product");
+});
+cartSchema.pre("getCartId", function () {
+  this.populate("products.product");
 });
 
 cartSchema.pre("findById", function () {
   this.populate("products.product");
 });
-
 cartSchema.pre("findOne", function () {
   this.populate("products.product");
 });
