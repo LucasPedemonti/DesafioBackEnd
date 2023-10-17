@@ -17,8 +17,9 @@ import FailLogin from "./routes/session.routes.js";
 import FailRegister from "./routes/session.routes.js";
 import ChatRouter from "./routes/chat.routes.js";
 import PrivateRouter from "./routes/private.routes.js";
-import UpdateProductsRouter from "./routes/updateproducts.router.js";
+import UpdateProductsRouter from "./routes/updateproducts.routes.js";
 import MockingRouter from "./routes/mocking.routes.js"
+
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import { Server } from "socket.io";
@@ -29,9 +30,13 @@ import { createServer } from "http";
 import * as dotenv from "dotenv";
 
 import {__dirname} from "./utils.js";
+import { loggerMiddleware } from "./logger.js";
+import LoggerRouter from "./routes/loggertest.routes.js"
+
 
 dotenv.config();
 const app = express();
+
 const httpServer = createServer(app);
 app.use(cookieParser("C0d3rS3cr3t"));
 
@@ -87,6 +92,9 @@ const environment = async () => {
 
 environment();
 
+// Ruta para probar los logs
+app.use(loggerMiddleware);
+app.use("/loggertest",LoggerRouter);
 
 
 //manejo de las rutas

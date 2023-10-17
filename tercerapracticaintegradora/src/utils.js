@@ -7,9 +7,12 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 import {faker} from '@faker-js/faker';
 
+
+
 const PRIVATE_KEY = "CoderKeyQueNadieDebeSaber";
 
 export const generateToken = (user) => {
+  console.log("generar token ",user)
   const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "1h" });
   return token;
 };
@@ -19,9 +22,9 @@ export const authToken = (req, res, next) => {
 
   if (!authHeader) res.status(401).json({ error: "Error de autenticacion" });
 
-  const token = authHeader.split(" ")[1];
+  // const token = authHeader.split(" ")[1];
 
-  jwt.verify(token, PRIVATE_KEY, (err, user) => {
+  jwt.verify(authHeader, PRIVATE_KEY, (err, user) => {
     if (err) res.status(401).json({ error: "Token invalido" });
 
     req.user = user;
@@ -51,14 +54,14 @@ export const passportCall = (strategy) => {
 };
 
 
-export const authorization = (role)=>{
+export const authorization = ()=>{
     return async(req,res,next)=>{
-        if(!req.user) return res.json({status: "error", message: "Unauthorized"})
-        if(req.user.user.role !== role) return res.json({status: "error", message: "UnauthorizeD"})
-        next()
+      console.log("sesion",req.session);
+      if (req.session.user && req.session.user.role.admin)  {
+         return next();
+      }else return res.status(403).json("error de autenticacion");
     }
 }
-
 //logica para hashear la contraseña
 export const createHash = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -69,6 +72,7 @@ export const isValidPassword = (savedPassword, password) => {
   console.log({ "cloud password": savedPassword, loginPassword: password });
   return bcrypt.compareSync(password, savedPassword);
 };
+
 
 // Función para generar un producto de mocking
 export const generateProductMocks=() =>{
