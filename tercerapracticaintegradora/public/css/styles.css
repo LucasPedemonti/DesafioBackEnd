@@ -35,43 +35,62 @@ body {
   color: black;
   font-size: 30px;  
 }
-.card-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;  
-  width: 330px;  
-  height:650px;  
-  margin-bottom: 50px;
-  margin-left: 50px;
-  margin-right: 50px;  
-  font-size: 15px;  
-  border: 2px solid gray; 
-  border-radius: 10px;
-  background-color: #b0b0b0;
-  box-shadow: 0 15px 20px rgb(0,0,0,.6);  
-}
 .cart-container{
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;  
-  width: 500px;  
-  height:650px;    
-  margin-right: 50px;  
+  justify-content: space-evenly;
+  flex-direction: row;  
   font-size: 15px;  
-  border: 2px solid gray; 
-  border-radius: 10px;
+  padding: 50px;    
+  width: 100%;
+}
+.cart-detail{
+  display: flex;
+  flex-direction:column;
+  align-items: center;    
+  text-align: center;
+  background-color: #1f4427;
+  border-radius: 10px;      
+  width:500px;   
+  background-color: #b0b0b0;
+  box-shadow: 0 15px 20px rgb(0,0,0,.6);
+}
+.card-container{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;  
+  font-size: 15px;  
+  padding: 50px;    
+  width: 100%;
+}
+.card-title{  
+  font-size: 20px;   
+}
+.card-home{
+  display: flex;
+  flex-direction:column;
+  align-items: center;    
+  padding-bottom: 10px;
+  background-color: #1f4427;
+  border-bottom-left-radius: 20px;    
+  border-bottom-right-radius: 20px;  
+  width: 250px;   
   background-color: #b0b0b0;
   box-shadow: 0 15px 20px rgb(0,0,0,.6);  
 }
-.card-body{
+.card-detail{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;   
+  flex-direction:column;
+  align-items: center;    
+  text-align: center;
+  background-color: #1f4427;
+  border-radius: 10px;      
+  width:300px;   
+  background-color: #b0b0b0;
+  box-shadow: 0 15px 20px rgb(0,0,0,.6);
 }
+
 .prod-img{
-  width: 200px;
+  width:100%;
 }
 .links {
   display: flex;
@@ -125,7 +144,7 @@ input[type="password"] {
 .boton{
   background:none;
   padding: 8px 15px;
-  font-size: 15px;
+  font-size: 12px;
   border-radius: 10px;
   cursor: pointer;
   margin: 10px;  
@@ -159,7 +178,7 @@ input[type="password"] {
 .button-scd{
   background:none;
   padding: 8px 15px;
-  font-size: 15px;
+  font-size: 12px;
   border-radius: 10px;
   cursor: pointer;
   margin: 10px;  

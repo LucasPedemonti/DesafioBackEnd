@@ -7,9 +7,9 @@
   <div class="Prod">
     <p>Productos</p>    
   </div>
-    <div id="product-list" class="card-container d-flex flex-row flex-wrap">
+    <div id="product-list" class="card-container">
     {{#each products }}
-     <div class="card-body m-2 mb-10 p-5">      
+     <div class="card-home">      
           <img class="prod-img" src="{{thumbnail}}" alt="">  
           <h2 class="card-title">{{this.name}}</h2>
           <p class="card-text">Categoría: {{category}}</p>

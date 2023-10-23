@@ -1,14 +1,21 @@
-
-    <h1>Compra finalizada</h1>
-    <ul>
+<div class="contenedor-principal">
+ <h1>Compra finalizada</h1>
+    <div>
+        <ul>
         {{#each purchase}}
             <li>
-                <strong>Código:</strong> {{this.code}} <br>
+                <strong>Código: {{this.code}}</strong> <br>
                 <strong>Fecha de Compra:</strong> {{this.purchase_datetime}} <br>
                 <strong>Monto:</strong> {{this.amount}} <br>
-                <strong>Comprador:</strong> {{this.purchaser}} <br>
-                <button  class="btn btn-secondary m-2 ml-10 "  href="/api/products">Ir al listado de productos</button>
+                <strong>Comprador:</strong> {{this.purchaser}} <br>                
             </li>
 
         {{/each}}
     </ul>
+    <a typy> </a>
+    <a type="button" class="button-scd"   href="/api/products">Volver a la Tienda</a>
+    
+    </div>
+    
+</div>
+   
