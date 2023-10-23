@@ -5,7 +5,7 @@ export const generateProductErrorInfo = (product) => {
       * description: needs to be a string, received ${product.description}
       * price: needs to be a number, received ${product.price}
       * category: needs to be a string, received ${product.category}
-      * availability: needs to be a number, received ${product.availability}`;
+      * availability: needs to be a number, received ${product.stock}`;
   };
 
   export const updateCartErrorInfo = (cart) => {

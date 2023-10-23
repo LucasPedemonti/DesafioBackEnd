@@ -19,13 +19,10 @@ import ChatRouter from "./routes/chat.routes.js";
 import PrivateRouter from "./routes/private.routes.js";
 import UpdateProductsRouter from "./routes/updateproducts.routes.js";
 import MockingRouter from "./routes/mocking.routes.js"
-
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import { Server } from "socket.io";
 import { createServer } from "http";
-
-
 
 import * as dotenv from "dotenv";
 
@@ -33,10 +30,8 @@ import {__dirname} from "./utils.js";
 import { loggerMiddleware } from "./logger.js";
 import LoggerRouter from "./routes/loggertest.routes.js"
 
-
 dotenv.config();
 const app = express();
-
 const httpServer = createServer(app);
 app.use(cookieParser("C0d3rS3cr3t"));
 
@@ -96,7 +91,6 @@ environment();
 app.use(loggerMiddleware);
 app.use("/loggertest",LoggerRouter);
 
-
 //manejo de las rutas
 app.use("/", LoginRoute);
 app.use("/signup", SignupRoute);
@@ -109,10 +103,14 @@ app.use("/forgot", ForgotRoute);
 app.use("/",FailLogin);
 app.use("/",FailRegister);
 app.use("/api/carts/",CartRouter);
-app.use("/api/user",UserRouter);
+app.use("/api/user/",UserRouter);
 app.use("/chat",ChatRouter);
 app.use("/api/updateproducts/",UpdateProductsRouter);
 app.use("/mockingproducts",MockingRouter);
+
+
+
+
 
 
 // Configuración del socket (del lado del servidor)
@@ -136,6 +134,7 @@ socketServer.on("connection", (socket) => {
 });
 
 
+    
 
 //Iniciar el servidor HTTP
 httpServer.listen(PORT, () => {

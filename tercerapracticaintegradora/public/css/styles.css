@@ -1,52 +1,105 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom right, #e0e0e0, #b0b0b0);
+  box-sizing: border-box;
+  font-family: sans-serif;
+  background: linear-gradient(to bottom right, #1f4427, #b0b0b0);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
+.contenedor-principal{
+ display: flex;
+ flex-direction: column; 
+ text-align: center;
+ justify-content: center;
+ margin-top: 0;
+ width: 100%;
 
-.welcome-message {
-  background-color: #0ebdb769;
-  color: white;
+}
+.Bienvenido{
+  display: flex;
   text-align: center;
-  padding: 10px;
-  width: 1500px;
-  margin-bottom: 20px;
-  margin-right: 50px;
-  font-size: 18px;
+  justify-content: center;
+  margin-bottom: 40px;
+  font-weight: 500;  
+  height: 40px;
+  font-size: 20px;
+  border: 1px solid gray; 
 }
-.welcome-message p {
-  margin-right: 50px;
-   
+.Prod{
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  color: black;
+  font-size: 30px;  
 }
-
-.login-container {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
+.card-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;  
+  width: 330px;  
+  height:650px;  
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;  
+  font-size: 15px;  
+  border: 2px solid gray; 
   border-radius: 10px;
+  background-color: #b0b0b0;
+  box-shadow: 0 15px 20px rgb(0,0,0,.6);  
+}
+.card-body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;   
+}
+.prod-img{
+  width: 200px;
+}
+.links {
+  display: flex;
+  align-items: center;  
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px;
+  padding: 10px;
+  width: 100%;  
+  font-size: 18px;
+  border: 2px solid gray; 
+}
+.links p {  
+  margin-right: 50px;   
+}
+.login-container {
+  background-color: rgba(255, 255, 255, 0.616);
+  padding: 20px;
+  position: relative;
+  border-radius: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
 .login-form {
   max-width: 300px;
   margin: 0 auto;
 }
-
 .form-group {
   margin-bottom: 10px;
   text-align: left;
 }
-
 label {
   display: block;
   font-weight: bold;
 }
-
+.ingreso{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -56,23 +109,77 @@ input[type="password"] {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
-button {
-  background-color: #777777;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+.boton{
+  background:none;
+  padding: 8px 15px;
+  font-size: 15px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin: 10px;  
+  color: #010300;  
+  box-shadow: 0 5px 10px rgb(0,0,0,.6);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  transition: 0.6s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none; 
 }
-
-button:hover {
-  background-color: #555555;
+.boton:hover {
+  color:  #1f4427;    
 }
-
+.boton::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #1050ff69;
+  z-index: -1;
+  transition: 0.6s;
+  bottom: 0;
+  border-radius:  50% 50% 0 0;
+}
+.boton:hover::before{
+  height: 180%;
+}
+.button-scd{
+  background:none;
+  padding: 8px 15px;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px;  
+  color:#010300;  
+  box-shadow: 0 5px 10px rgb(0,0,0,.6);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  transition: 0.6s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none; 
+}
+.button-scd:hover {
+  color:  #e3ece5;     
+}
+.button-scd::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #0c0e142c;
+  z-index: -1;
+  transition: 0.6s;
+  bottom: 0;
+  border-radius:  50% 50% 0 0;
+}
+.button-scd:hover::before{
+  height: 180%;
+}
 .a-forgot,
 .a-signup{
   text-decoration: none; 
-  color: inherit; /
+  color: inherit; 
 }
+

@@ -1,9 +1,4 @@
 <div class= "d-flex flex-row flex-wrap"> 
-<div  class="container mt-0 row " > 
-    <h2>Lista de Productos, solo el Administrador puede estar acá</h2>
-</div>
-
-
 <div class="container mt-5 row">  
 <h3>Crear Nuevo Producto</h3>
 
@@ -21,10 +16,10 @@
         <label for="category">Categoría:</label>
         <input type="text" id="category" name="category" required><br>
 
-        <label for="availability">Disponibilidad:</label>
-        <input type="number" id="availability" name="availability" required><br>
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" required><br>
 
-        <button type="submit">Crear Producto</button>
+        <button type="submit" class="button-scd">Crear Producto</button>
        
     </form>
 </div>
@@ -39,13 +34,13 @@
                 <strong>Descripción:</strong> {{this.description}}<br>
                 <strong>Precio:</strong> {{this.price}}<br>
                 <strong>Categoría:</strong> {{this.category}}<br>
-                <strong>Disponibilidad:</strong> {{this.availability}}<br>
+                <strong>stock:</strong> {{this.stock}}<br>
 
                 <!-- Botón para actualizar el producto -->
-                <button class="button-to-update-product" id="{{this._id}}"  >Actualizar</button> 
+                <button class="button-scd button-to-update-product" id="{{this._id}}"  >Actualizar</button> 
 
                 <!-- Botón para eliminar el producto -->
-                <button class="button-delete-product" id="{{this._id}}">Eliminar</button>
+                <button class="button-scd button-delete-product" id="{{this._id}}">Eliminar</button>
             </li>
         {{/each}}
     </ul>
