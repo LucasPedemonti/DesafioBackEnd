@@ -33,7 +33,7 @@ async function getCartById(req, res) {
         price: product.product.price,
         category: product.product.category,
         stock: product.product.stock,
-        quantity:  product.quantity,
+        quantity: product.quantity,
       };
     }),
     total: cartById.total,

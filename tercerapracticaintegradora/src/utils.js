@@ -81,6 +81,6 @@ export const generateProductMocks=() =>{
     description: faker.lorem.sentence(),
     price: faker.datatype.number({ min: 10, max: 1000, precision: 0.01 }),
     category: faker.commerce.department(),
-    availability: faker.datatype.number({ min: 0, max: 100 }),
+    stock: faker.datatype.number({ min: 0, max: 100 }),
   };
 }

@@ -50,6 +50,19 @@ body {
   background-color: #b0b0b0;
   box-shadow: 0 15px 20px rgb(0,0,0,.6);  
 }
+.cart-container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;  
+  width: 500px;  
+  height:650px;    
+  margin-right: 50px;  
+  font-size: 15px;  
+  border: 2px solid gray; 
+  border-radius: 10px;
+  background-color: #b0b0b0;
+  box-shadow: 0 15px 20px rgb(0,0,0,.6);  
+}
 .card-body{
   display: flex;
   align-items: center;

@@ -9,16 +9,14 @@ createProductForm &&
     const description = document.getElementById("description").value;
     const price = parseFloat(document.getElementById("price").value);
     const category = document.getElementById("category").value;
-    const availability = parseInt(
-      document.getElementById("stock").value
-    );
+    const stock = parseInt(document.getElementById("stock").value);
 
     const nuevoProducto = {
       name,
       description,
       price,
       category,
-      availability,
+      stock,
     };
 
     // Realiza una solicitud POST al servidor para crear el producto

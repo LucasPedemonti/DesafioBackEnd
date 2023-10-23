@@ -17,14 +17,14 @@ console.log(pid)
   const description = document.getElementById('description').value;
   const price = parseFloat(document.getElementById('price').value);
   const category = document.getElementById('category').value;
-  const availability = parseInt(document.getElementById('availability').value);
+  const stock = parseInt(document.getElementById('stock').value);
 
   const updateProducto = {
     name,
     description,
     price,
     category,
-    availability,
+    stock,
   };
 
   // Realiza una solicitud POST al servidor para crear el producto

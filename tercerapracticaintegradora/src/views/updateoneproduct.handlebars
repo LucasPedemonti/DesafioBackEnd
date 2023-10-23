@@ -1,13 +1,15 @@
-<div>
-            <li>
-                <strong>Id:</strong> {{_id}}<br>
-                <strong>Nombre:</strong> {{name}}<br>
-                <strong>Descripción:</strong> {{description}}<br>
-                <strong>Precio:</strong> {{price}}<br>
-                <strong>Categoría:</strong> {{category}}<br>
-                <strong>Disponibilidad:</strong> {{availability}}<br>
-            </li>
 
+<div>
+    
+            <li>
+                <strong>Id:</strong> {{product_id}}<br>
+                <strong>Nombre:</strong> {{this.product.name}}<br>
+                <strong>Descripción:</strong> {{description}}<br>
+                <strong>Precio:</strong> {{product.price}}<br>
+                <strong>Categoría:</strong> {{category}}<br>
+                <strong>Disponibilidad:</strong> {{stock}}<br>
+            </li>
+    
     <!-- Formulario para actualizar un producto -->
      <form id="updateProductForm" method="POST">
         
@@ -23,8 +25,8 @@
         <label for="category">Categoría:</label>
         <input type="text" id="category" name="category" required><br>
 
-        <label for="availability">Disponibilidad:</label>
-        <input type="number" id="availability" name="availability" required><br>
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" required><br>
       
         <button type="submit" class="button-update-product" id="{{this._id}}" >Actualizar producto</button>
    
