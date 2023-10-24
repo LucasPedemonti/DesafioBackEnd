@@ -41,14 +41,14 @@ export default class ProductDao {
     return productsByCategory;
   };
 
-  getByAvailability = async (filter) => {
+  getByStock = async (filter) => {
     try {
       const products = await productsModel.find();
-      const productsByAvailability = products.filter(
-        (p) => String(p.availability) == filter
+      const productsByStock = products.filter(
+        (p) => String(p.stock) == filter
       );
-      if (productsByAvailability.length > 0) {
-        return productsByAvailability;
+      if (productsByStock.length > 0) {
+        return productsByStock;
       } else {
         notifier.notify({
           title: 'Info',

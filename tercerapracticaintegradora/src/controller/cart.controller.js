@@ -55,22 +55,23 @@ async function getCartById(req, res) {
 async function updateCart(req, res) {
   try {
     const cid = req.user.user.user.cart;
+    console.log("Console.log de req.user.user.user.cart:" , req.user.user.user.cart);
     const pid = req.params.pid;
     const product = await PRODUCTDAO.getById(pid);
 
-    if (
-      !product ||
-      !product.name ||
-      !product.description ||
-      !product.price ||
-      !product.category ||
-      !product.stock
-    ) {
-      throw new CustomError(
-        EErrors.InvalidData,
-        "El producto es inválido o tiene datos faltantes."
-      );
-    }
+    // if (
+    //   !product ||
+    //   !product.name ||
+    //   !product.description ||
+    //   !product.price ||
+    //   !product.category ||
+    //   !product.stock
+    // ) {
+    //   throw new CustomError(
+    //     EErrors.InvalidData,
+    //     "El producto es inválido o tiene datos faltantes."
+    //   );
+    // }
 
     const updateCart = await CARTDAO.addProductToCart(cid, pid);
     console.log(updateCart);
@@ -78,6 +79,7 @@ async function updateCart(req, res) {
   } catch (error) {
     if (error instanceof CustomError) {
       const errorInfo = updateCartErrorInfo(error);
+      console.log("Console.log de errorInfo: ", errorInfo);
       res.status(errorInfo.statusCode).json(errorInfo);
     } else {
       console.error("Error no controlado:", error);
@@ -96,7 +98,7 @@ async function generatedTicket(req, res) {
     code: randomCode,
     purchase_datetime: new Date(),
     amount: cart.total,
-    purchaser: user.user.user.email,
+    purchaser: user.user.user.first_name,
   };
   const ticket = TICKETDAO.newTicket(newTicket);
 

@@ -2,10 +2,11 @@ export const generateProductErrorInfo = (product) => {
     return `One or more properties were incomplete or not valid.
       List of required properties:
       * name: needs to be a string, received ${product.name}
-      * description: needs to be a string, received ${product.description}
       * price: needs to be a number, received ${product.price}
       * category: needs to be a string, received ${product.category}
-      * availability: needs to be a number, received ${product.stock}`;
+      * stock: needs to be a number, received ${product.stock}
+      * thumbnail: needs to be a string, received ${product.thumbnail}
+      * description: needs to be a string, received ${product.description}`;
   };
 
   export const updateCartErrorInfo = (cart) => {

@@ -7,7 +7,7 @@ import { productService } from "../repositories/services.js";
 const saveProduct = async (req, res) => {
     try {
       const product = req.body;
-      if (!product || !product.name || !product.description || !product.price || !product.category || !product.availability) {
+      if (!product.name || !product.price  || !product.category || !product.stock || !product.thumbnail ) {
         throw new CustomError(EErrors.InvalidData, "Los datos del producto son inválidos.");
       }
   
@@ -16,6 +16,7 @@ const saveProduct = async (req, res) => {
     } catch (error) {
       if (error instanceof CustomError) {
         const errorInfo = generateProductErrorInfo(error);
+        console.log("Console.log de errorInfo: ", errorInfo);
         res.status(errorInfo.statusCode).json(errorInfo);
       } else {
         console.error("Error no controlado:", error);

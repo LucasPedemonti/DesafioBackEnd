@@ -12,8 +12,8 @@ export default class TicketDao {
       return ticketId;
   };
  
-  async getByEmail(userEmail) {
-    let ticket= await ticketModel.findOne({purchaser:userEmail});
+  async getByName(userName) {
+    let ticket= await ticketModel.findOne({purchaser:userName});
     return ticket;
 };
   async newTicket(data) {

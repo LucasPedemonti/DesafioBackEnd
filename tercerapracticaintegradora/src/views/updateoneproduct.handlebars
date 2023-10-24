@@ -1,34 +1,40 @@
 
 <div>
     
-            <li>
-                <strong>Id:</strong> {{product_id}}<br>
-                <strong>Nombre:</strong> {{this.product.name}}<br>
-                <strong>Descripción:</strong> {{description}}<br>
-                <strong>Precio:</strong> {{product.price}}<br>
-                <strong>Categoría:</strong> {{category}}<br>
-                <strong>Disponibilidad:</strong> {{stock}}<br>
+        <ul> 
+            <li  class="list-group-item">
+                <strong>Id:{{this.product._id}}</strong> <br>
+                <strong>Nombre:{{this.name}}</strong> <br>
+                <strong>Descripción:{{product.description}}</strong> <br>
+                <strong>Precio: ${{this.price}}</strong> <br>
+                <strong>Categoría:{{this.category}}</strong> <br>
+                <strong>Disponibilidad:{{this.stock}}</strong> <br>
             </li>
-    
+        </ul>
+     
+   
     <!-- Formulario para actualizar un producto -->
      <form id="updateProductForm" method="POST">
         
         <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="description">Descripción:</label>
-        <textarea id="description" name="description" required></textarea><br>
+        <input type="text" id="name" placeholder="Ingresa el nuevo nombre" name="name" required><br>
+        
+        <label for="category">Categoría:</label>
+        <input type="text" id="category" name="category" required><br>
+        
+        <label for="description">Descripción:</label><br>
+        <textarea type="text" id="description" name="description" required></textarea><br>
 
         <label for="price">Precio:</label>
         <input type="number" id="price" name="price" step="0.01" required><br>
-
-        <label for="category">Categoría:</label>
-        <input type="text" id="category" name="category" required><br>
-
+       
         <label for="stock">Stock:</label>
         <input type="number" id="stock" name="stock" required><br>
+
+        <label for="thumbnail">URL:</label>
+        <input type="text" id="thumbnail" name="thumbnail" required><br>
       
-        <button type="submit" class="button-update-product" id="{{this._id}}" >Actualizar producto</button>
+        <button type="submit" class="button-scd button-update-product" id="{{this._id}}" >Actualizar producto</button>
    
     </form>
 

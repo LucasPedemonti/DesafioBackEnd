@@ -10,7 +10,7 @@ import {
 } from "../controller/cart.controller.js";
 import {
   getTicketById,
-  getTicketByEmail,
+  getTicketByName,
 } from "../controller/ticket.controller.js";
 
 import cartModel from "../dao/models/cart.model.js";
@@ -31,7 +31,7 @@ router.get(
   "/:cid/finishpurchase/",
   passportCall("jwt"),
   isUser,
-  getTicketByEmail
+  getTicketByName
 );
 
 router.post("/:cid/product/:pid", passportCall("jwt"), isUser, updateCart);

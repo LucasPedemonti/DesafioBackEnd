@@ -1,18 +1,13 @@
 <div class="contenedor-principal">
   <h1>Carritos de Compras</h1>
-
-  <div class="row">
-  
-      
-        <div class="cart-container">
-          <div class="cart-detail">
-            <h2 class="card-title">Carrito {{_id}}</h2>
-            
-           
+  <h2 class="card-title">N°{{_id}}</h2>
+  <div class="cart-container">
+        <div>
+          <div class="cart-detail">       
               {{#each products}}
                 <ul> 
-                    <li class="list-group-item">
-                    <h5 class="card-subtitle  text-muted">Producto: {{this.name}}</h5>
+                    <li class="cart-list">
+                    <h5 class="card-title">Producto: {{this.name}}</h5>
                     <p class="card-text">Nombre: {{this.name}}</p>
                     <p class="card-text">Precio: ${{this.price}}</p>
                     <p class="card-text">Cantidad: {{this.stock}}</p>
@@ -22,6 +17,7 @@
 
            
             <h2 class="card-title">Total ${{this.total}}</h2>
+            <a type="button" class="button-scd"   href="/api/products">Volver a ver a la tienda</a>
             <button type="button" class="button-scd  button-finish-purchase"  id="{{this._id}}"> Finalizar proceso de compra</button>
 
             {{#unless this.products.length}}

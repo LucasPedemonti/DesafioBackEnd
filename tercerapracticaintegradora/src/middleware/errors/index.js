@@ -13,7 +13,7 @@ export default (error, req, res, next) => {
         status: "error",
         error: error.name,
       });
-      break;
+      break;     
     case EErrors.ROUTING_ERROR:
       res.send({
         status: "error",

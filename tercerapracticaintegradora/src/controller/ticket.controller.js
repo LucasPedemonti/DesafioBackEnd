@@ -28,12 +28,12 @@ async function getTicketById(req,res){
   
 }
 
-async function getTicketByEmail(req,res){
-    const userEmail = req.user.user.user.email;
-    const ticket = await TICKETDAO.getByEmail(userEmail);
+async function getTicketByName(req,res){
+    const userName = req.user.user.user.first_name;
+    const ticket = await TICKETDAO.getByName(userName);
     ticket._id = ticket._id.toString(); 
     console.log(ticket)
     res.render('finishpurchase',ticket)
   
 }
-export {saveTicket,getAllTickets,getTicketById,getTicketByEmail}
+export {saveTicket,getAllTickets,getTicketById,getTicketByName}

@@ -1,21 +1,31 @@
-<div class="contenedor-principal">
+<div class="finish-purchase">
  <h1>Compra finalizada</h1>
+ <h3>Ticket de compra</h3> 
     <div>
-        <ul>
-        {{#each purchase}}
-            <li>
-                <strong>Código: {{this.code}}</strong> <br>
+        <ul>        
+            <li class="finish-list">
+                <strong>Usuario:</strong> {{this.purchaser}} <br> 
+                <strong>Código: </strong>{{this.code}} <br>
                 <strong>Fecha de Compra:</strong> {{this.purchase_datetime}} <br>
-                <strong>Monto:</strong> {{this.amount}} <br>
-                <strong>Comprador:</strong> {{this.purchaser}} <br>                
-            </li>
-
-        {{/each}}
-    </ul>
-    <a typy> </a>
-    <a type="button" class="button-scd"   href="/api/products">Volver a la Tienda</a>
+                <strong>Precio Total: $</strong> {{this.amount}} <br>
+                <h2>Muchas gracias por comprar en nuestra tienda!!</h2>               
+            </li>       
+        </ul>    
+    </div>    
+    <div class="close-btns">
+        
+        <a type="button" class="button-scd"   href="/api/products">Volver a la Tienda</a>
+        {{#if this.purchaser}}
+        <button id="logout-button"  class="button-scd">Cerrar Sesión</button>
+        {{/if}}
+    </div>
+    
     
     </div>
     
 </div>
    
+ <script src="/js/product.js"></script>
+ <script src="/js/logout.js"></script>
+ <script src="/js/cart.js"></script>
+ <script src="/js/updateproducts.js"></script>

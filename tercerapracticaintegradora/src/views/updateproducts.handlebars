@@ -1,14 +1,11 @@
-<div class= "d-flex flex-row flex-wrap"> 
-<div class="container mt-5 row">  
+<div class= "contenedor-principal"> 
+<div class="upd-new">  
 <h3>Crear Nuevo Producto</h3>
 
     <!-- Formulario para crear un nuevo producto -->
     <form id="createProductForm"  method="POST">
-        <label for="name">Nombre:</label>
+        <label for="name">Nombre del producto:</label>
         <input type="text" id="name" name="name" required><br>
-
-        <label for="description">Descripción:</label>
-        <textarea id="description" name="description" required></textarea><br>
 
         <label for="price">Precio:</label>
         <input type="number" id="price" name="price" step="0.01" required><br>
@@ -19,22 +16,28 @@
         <label for="stock">Stock:</label>
         <input type="number" id="stock" name="stock" required><br>
 
+        <label for="thumbnail">URL:</label>
+        <input type="text" id="thumbnail" name="thumbnail" required><br>
+
+        <label for="description">Descripción:</label><br>
+        <textarea type="text" id="description" class="text-area"  name="description" required></textarea><br>
+         
         <button type="submit" class="button-scd">Crear Producto</button>
        
     </form>
 </div>
 
-<div class="container mt-5"> 
+<div class="upd-container"> 
     <!-- Lista de productos -->
-    <ul>
+    <ul class="upd-product">
         {{#each products}}
-            <li>
+            <li class="upd-list">
                 <strong>Id:</strong> {{this._id}}<br>
                 <strong>Nombre:</strong> {{this.name}}<br>
-                <strong>Descripción:</strong> {{this.description}}<br>
-                <strong>Precio:</strong> {{this.price}}<br>
+                <strong>Precio:</strong> ${{this.price}}<br>
                 <strong>Categoría:</strong> {{this.category}}<br>
                 <strong>stock:</strong> {{this.stock}}<br>
+                <img class="prod-img" src="{{thumbnail}}" alt="">
 
                 <!-- Botón para actualizar el producto -->
                 <button class="button-scd button-to-update-product" id="{{this._id}}"  >Actualizar</button> 
