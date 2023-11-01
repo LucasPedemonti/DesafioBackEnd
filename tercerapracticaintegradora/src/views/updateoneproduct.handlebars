@@ -1,23 +1,24 @@
 
 <div>
-    
+    <div>        
         <ul> 
-            <li  class="list-group-item">
-                <strong>Id:{{this.product._id}}</strong> <br>
-                <strong>Nombre:{{this.name}}</strong> <br>
-                <strong>Descripción:{{product.description}}</strong> <br>
-                <strong>Precio: ${{this.price}}</strong> <br>
-                <strong>Categoría:{{this.category}}</strong> <br>
-                <strong>Disponibilidad:{{this.stock}}</strong> <br>
+                <li class="cart-list">
+                <strong>Nombre:</strong>{{name}} <br>
+                <strong>Descripción:</strong>{{description}} <br>
+                <strong>Precio: $</strong>{{price}} <br>
+                <strong>Categoría:</strong>{{this.category}} <br>
+                <strong>Disponibilidad:</strong>{{stock}} <br>
             </li>
         </ul>
-     
+    
+    </div>
+   
    
     <!-- Formulario para actualizar un producto -->
      <form id="updateProductForm" method="POST">
         
         <label for="name">Nombre:</label>
-        <input type="text" id="name" placeholder="Ingresa el nuevo nombre" name="name" required><br>
+        <input type="text" id="name" placeholder={{"Ingresa el nuevo nombre"}} name="name" required><br>
         
         <label for="category">Categoría:</label>
         <input type="text" id="category" name="category" required><br>
