@@ -16,7 +16,7 @@ async function postLogin(username, password) {
         window.location.href = "/api/products"; 
     
        } else {
-           console.log(result); // Muestra los datos en caso de error
+           console.log(result,"hola"); // Muestra los datos en caso de error
        }
 }
 
