@@ -19,6 +19,6 @@ export default {
   },
   jwt: {
     COOKIE: process.env.JWT_COOKIE,
-    SECRET: process.env.JWT_SECRET,
+    SECRET: process.env.JWT_SECRET,    
   },
-};
+ };

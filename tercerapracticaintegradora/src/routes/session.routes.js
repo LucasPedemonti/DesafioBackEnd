@@ -4,6 +4,7 @@ import CartModel from "../dao/models/cart.model.js";
 import notifier from 'node-notifier';
 import { passportCall,createHash ,authorization,generateToken, isValidPassword} from "../utils.js";
 import passport from "passport";
+import bcrypt from 'bcrypt';
 
 
 const router = Router();
@@ -12,23 +13,23 @@ const router = Router();
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await UserModel.findOne({ email: username });
-
   if (!user) {
     return res.json({ status: "error", message: "User not found" });
-  } else {
+  } const isValid = await bcrypt.compare(password, user.password)
+   if (!isValid){
+    res.send("wrong password")
+    return    
+  }  
+  else {
     // Crea un carrito vacío para el usuario
     const cart = [];
-
     // Crea un nuevo carrito en la base de datos y guarda el ID en el usuario
     const newCart = await CartModel.create({ products: cart });
     user.cart = newCart._id; // Asigna el ID del nuevo carrito al usuario
-
     // Guarda los cambios en el usuario
     await user.save();
-
     // Genera el token con información del usuario y el carrito
     const myToken = generateToken({ user, cart });
-
     res
       .cookie("CoderKeyQueNadieDebeSaber", myToken, {
         maxAge: 60 * 60 * 1000,

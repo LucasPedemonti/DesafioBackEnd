@@ -9,6 +9,7 @@ import {faker} from '@faker-js/faker';
 
 
 
+
 const PRIVATE_KEY = "CoderKeyQueNadieDebeSaber";
 
 export const generateToken = (user) => {
