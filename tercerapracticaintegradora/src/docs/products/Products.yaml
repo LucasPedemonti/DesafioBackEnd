@@ -80,11 +80,11 @@ components:
           type: String
           description: Propietario del producto (por defecto, 'admin')
       example:
-        name: "Producto Ejemplo"
-        description: "Descripción del producto de ejemplo"
-        price: 19.99
-        category: "Electrónicos"
-        stock: 10
+        name: "Producto de prueba"
+        description: "Esta producto es de prueba"
+        price: 500
+        category: "Hardware"
+        stock: 23
         owner: "admin"
 
     UpdateProductRequest:
@@ -106,8 +106,8 @@ components:
           type: Number
           description: Disponibilidad del producto
       example:
-        name: "Nuevo Nombre"
+        name: "Nuevo Nombre del producto seleccionado"
         description: "Nueva descripción del producto"
-        price: 24.99
-        category: "Nueva Categoría"
-        stock: 5
+        price: 450
+        category: "Nueva categoría de producto"
+        stock: 20
