@@ -1,6 +1,11 @@
-//import { USERDAO } from "../dao/index.js";
 import { userService } from "../repositories/services.js";
-import MailService from "../services/mailing.js"
+import multer from 'multer';
+import notifier from 'node-notifier';
+import { createUserDTO } from "../DTO/userDTO.js"; 
+
+
+// Configuración de Multer para la subida de imágenes de perfil
+//const profileImageUpload = multer({ dest: 'public/upload/profiles/' });
 
 //GUARDAR UN USUARIO////****** */
 const saveUser = async (req, res) => {
@@ -11,8 +16,7 @@ const saveUser = async (req, res) => {
         status: "error",
         error: "Incomplete values",
       });
-    }
-  
+    }  
     try {
       // Crear un nuevo usuario utilizando el modelo User y el esquema de usuario
       const newUser = new User({
@@ -21,8 +25,8 @@ const saveUser = async (req, res) => {
         email,
         age,
         password,
-      });
-  
+       
+      });  
       // Asociar un carrito vacío al nuevo usuario
       const newCart = new Cart();
       await newCart.save();
@@ -30,7 +34,6 @@ const saveUser = async (req, res) => {
   
       // Establecer el rol predeterminado como 'user'
       newUser.role = 'user';
-
       const createdUser = await userService.createUser(newUser);
   
       res.status(201).json({
@@ -48,25 +51,166 @@ const saveUser = async (req, res) => {
   };
   
 
-//OBTENER TODOS LOS USUARIOS/////**** */
+//OBTENER TODOS LOS USUARIOS/////**** */DTO
 const getAllUsers = async (req, res) => {
-    let users = await userService.getAll();
-    if (!users)
-      return res
-        .status(500)
-        .send({
-          status: "error",
-          error: "Couldn't get users due to internal error",
-        });
-    res.send({ status: "success", payload: users });
-  };
+  try {
+    const allUsers = await userService.getAllUsers(); 
+    const userDTOs = allUsers.map(users => createUserDTO(users));
+    res.render('edit-user', { users: userDTOs });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });
+  }
+};
+
 
 
  //OBTENER USUARIO POR ID///////*** */
 const getUserById = async(req,res)=>{
     const uid=req.params.uid;
-    const userId = await userService.getUserId(uid);
+    const userId = await userService.getUserById(uid);
     res.send (userId)
 }
 
-export {saveUser,getAllUsers,getUserById}
+//OBTENER USUARIO POR ID PARA CAMBIAR ROL///////*** */
+const getUserForChange = async(req,res)=>{
+  const uid=req.params.uid;
+  const userId = await userService.getUserById(uid);
+  const users = await userService.getAllUsers(); 
+  res.render ('edite-users',{userId:userId,users:users})
+};
+
+//CAMBIAR ROL DE USUARIO///////*** */
+const changeRoleUser = async(req,res)=>{
+  const uid=req.params.uid;
+  const {newRole}=req.body;
+  // Obtener información sobre la carga de documentos del usuario
+ const user = await userService.getUserById(uid);
+    
+ // Verificar la existencia de los documentos requeridos
+ const requiredDocuments = ['identification', 'addressProof', 'bankStatement'];
+ const hasRequiredDocuments = requiredDocuments.every(documentType =>
+   user.documents.some(document => document.name === documentType)
+ );
+
+ if (hasRequiredDocuments) {
+   // Cambiar el rol del usuario solo si ha cargado los documentos
+   const updatedUser = await userService.updateUser(uid, newRole);
+   notifier.notify({
+    title: 'Exito',
+    message: 'Rol modificado'
+  });
+    res.send (updatedUser)
+  }else {
+    notifier.notify({
+      title: 'Error',
+      message: 'El usuario debe cargar los documentos'
+    });
+}
+}
+//OBTENER USUARIO POR EMAIL///////*** */
+const getUserByEmail = async(req,res)=>{
+  const email=req.params.userEmail;
+  const userId = await userService.getUserIdByEmail(email);
+  res.send (userId)
+};
+
+//IR A LA RUTA DE SUBIR DOCUMENTOS
+const goUpDocument =async(req,res)=>{
+  const uid=req.params.uid;
+  const userId = await userService.getUserById(uid);
+  res.render ('up-document',{userId})
+};
+
+//GUARDAR LA IMAGEN DE PERFIL CON MULTER
+const uploadProfileUser = async (req, res) => {
+  try {
+    const userId = req.params.uid; 
+    const imagePath = req.file.path;
+    await userService.uploadProfileUser(userId,imagePath);
+       
+    notifier.notify({
+      title: 'Hermosa foto',
+      message: 'Tu imagen fue agregada al perfil',
+    });
+       res.redirect(303, `/api/users/${userId}/profile`);
+  } catch (error) {
+    
+    res.status(500).json({ error: 'Error interno del servidor al subir la imagen de perfil' });
+  }
+   
+};
+
+
+//SUBIR DOCUMENTOS CON MULTER
+const uploadDocumentUser = async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const documentType = req.body.documentType; 
+    if (!req.file) {
+      return res.status(400).json({ error: 'Por favor, selecciona un archivo.' });
+    }
+    const filePath = req.file.path;
+    await userService.uploadDocument(userId, documentType, filePath);
+
+    notifier.notify({
+      title: 'Documento subido',
+      message: 'Tu documento fue subido correctamente',
+    });
+
+    res.redirect(303, `/api/users/${userId}/profile`);
+  } catch (error) {
+    res.status(500).json({ error: 'Error interno del servidor al subir el archivo.' });
+  }
+};
+
+//IR AL PERFIL
+const getProfile =async(req,res)=>{
+  const userId=req.params.uid;
+  const profile= await userService.getUserById(userId);
+  res.render('profile',profile)
+};
+
+//OBTENER EL AVATAR
+// const getAvatar =async(req,res)=>{
+//   const userId=req.params.uid;
+//   const showAvatar= await userService.getAvatar(userId);
+//   res.send(showAvatar)
+// };
+
+//ELIMINAR USUARIO
+const deleterUser =async(req,res)=>{
+  const userId =req.params.uid;
+  const usertodelete = await userService.deleteUser(userId);
+  notifier.notify({
+    title: 'Exito',
+    message: 'Usuario eliminado',
+  });
+  return;
+}
+const deleteUser = async (req, res) => {
+  const userId = req.params.uid;
+  console.log(userId);
+  try {
+    // Call the userService method to delete the user
+    await userService.deleteUser(userId);
+    notifier.notify({
+      title: 'Éxito',
+      message: 'Usuario eliminado',
+    });
+    res.status(200).send('Usuario eliminado con éxito');
+  } catch (error) {
+    console.error("Error al eliminar el usuario:", error);
+    res.status(500).send('Error al eliminar el usuario');
+  }
+};
+export {saveUser,
+  getAllUsers,
+  getUserById,
+  changeRoleUser,
+  getUserForChange,
+  getUserByEmail,
+  goUpDocument,
+  uploadDocumentUser,
+  getProfile,
+  uploadProfileUser,
+  deleteUser}

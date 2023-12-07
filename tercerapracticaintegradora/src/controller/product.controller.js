@@ -4,7 +4,9 @@ import { generateProductErrorInfo } from "../services/info.js";
 import { productService } from "../repositories/services.js";
 
 ////GUARDAR PRODUCTO////*** */
-const saveProduct = async (req, res) => {
+const 
+
+saveProduct = async (req, res) => {
     try {
       const product = req.body;
       if (!product.name || !product.price  || !product.category || !product.stock || !product.thumbnail ) {

@@ -10,15 +10,15 @@ import bcrypt from 'bcrypt';
 const router = Router();
 
 //Login con jwt  
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => {  
   const { username, password } = req.body;
   const user = await UserModel.findOne({ email: username });
   if (!user) {
-    return res.json({ status: "error", message: "User not found" });
-  } const isValid = await bcrypt.compare(password, user.password)
+    return res.status(404).json({ status: "error", message: "User not found" });
+  } 
+  const isValid = await bcrypt.compare(password, user.password)
    if (!isValid){
-    res.send("wrong password")
-    return    
+    return res.status(401).json({ status: "error", message: "Wrong password" });
   }  
   else {
     // Crea un carrito vacío para el usuario
@@ -29,13 +29,11 @@ router.post("/login", async (req, res) => {
     // Guarda los cambios en el usuario
     await user.save();
     // Genera el token con información del usuario y el carrito
-    const myToken = generateToken({ user, cart });
-    res
-      .cookie("CoderKeyQueNadieDebeSaber", myToken, {
+    const myToken = generateToken({ user });
+    res.cookie("CoderKeyQueNadieDebeSaber", myToken, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-      })
-      .json({ status: "success", respuesta: "Autenticado exitosamente" });
+      }).status(200).json({ status: "success", respuesta: "Autenticado exitosamente", token: myToken });
   }
 });
 

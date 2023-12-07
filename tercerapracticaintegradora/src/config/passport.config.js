@@ -108,7 +108,8 @@ const initializePassport = () => {
               first_name,
               last_name,
               age,
-              email,             
+              email,    
+              last_connection:null,         
               password: createHash(password),
               
 
@@ -139,6 +140,9 @@ const initializePassport = () => {
             if (!isValidPassword(user.password, password)) {
               return done(null, false, { message: "Wrong password" });
             }
+            // Actualizar last_connection y guardar en la base de datos
+            user.last_connection = new Date();
+            await user.save();
             return done(null, user); 
           } catch (error) {
             return done(error); 

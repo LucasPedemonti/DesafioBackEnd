@@ -17,6 +17,7 @@ console.log(pid)
   const description = document.getElementById('description').value;
   const price = parseFloat(document.getElementById('price').value);
   const category = document.getElementById('category').value;
+  const thumbnail = document.getElementById("thumbnail").value;
   const stock = parseInt(document.getElementById('stock').value);
 
   const updateProducto = {
@@ -24,6 +25,7 @@ console.log(pid)
     description,
     price,
     category,
+    thumbnail,
     stock,
   };
 

@@ -7,12 +7,10 @@ const router = Router();
 
 ////////ENTREGA ARQUITECTURA DE CAPAS:////////////////
 router.get("/", passportCall('jwt') ,getAllProducts);
-//router.post("/",saveProduct);
+router.post("/",saveProduct);
 router.get("/:pid",getProductById);
-//router.post("/:pid",updatedProduct);
+router.post("/updateproduct/:pid",updateProduct);
 //router.delete("/:pid",deletedProduct);
-
-
 
 
 //NUEVO METODO GET
