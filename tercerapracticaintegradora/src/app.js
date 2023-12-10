@@ -19,13 +19,14 @@ import ProductRouter from "./routes/product.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import LogoutRouter from "./routes/logout.routes.js";
-import CurrentRouter from "./routes/current.routes.js";
+import RestorePass from "./routes/restorepass.routes.js";
+
 import ForgotRoute from "./routes/forgot.routes.js"
 import FailLogin from "./routes/session.routes.js";
 import FailRegister from "./routes/session.routes.js";
 import ChatRouter from "./routes/chat.routes.js";
-import PrivateRouter from "./routes/private.routes.js";
-import UpdateProductsRouter from "./routes/updateproducts.routes.js";
+
+import UpdateProductsRouter from "./routes/update-products.routes.js";
 import MockingRouter from "./routes/mocking.routes.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
@@ -114,13 +115,13 @@ app.use(loggerMiddleware);
 app.use("/loggertest",LoggerRouter);
 
 //manejo de las rutas
+//manejo de las rutas
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 app.use("/", LoginRoute);
 app.use("/signup", SignupRoute);
 app.use("/api/session/", SessionRoute);
 app.use("/api/products/",ProductRouter);
-app.use("/private",PrivateRouter);
 app.use("/logout",LogoutRouter);
-app.use("/current",CurrentRouter);
 app.use("/forgot", ForgotRoute);
 app.use("/",FailLogin);
 app.use("/",FailRegister);
@@ -129,6 +130,7 @@ app.use("/api/user/",UserRouter);
 app.use("/chat",ChatRouter);
 app.use("/api/updateproducts/",UpdateProductsRouter);
 app.use("/mockingproducts",MockingRouter);
+app.use("/api/restore-password/",RestorePass);
 app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 

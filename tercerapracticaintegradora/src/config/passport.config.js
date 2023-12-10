@@ -6,7 +6,7 @@ import { createHash,isValidPassword } from "../utils.js";
 import jwt, { ExtractJwt } from "passport-jwt";
 import * as dotenv from "dotenv";
 
-
+import crypto from 'crypto';
 dotenv.config();
 const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;

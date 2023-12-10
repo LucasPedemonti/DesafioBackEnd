@@ -1,30 +1,30 @@
-import chai from "chai"
-import supertest from "supertest"
-import mongoose from "mongoose"
+import chai from 'chai';
+import supertest from 'supertest';
 
-const expect = chai.expect
-const requester = supertest(`http://localhost:PORT`)
-mongoose.connect("URL DE MONGO");
-let emailUser = ""
-let passwordUser = ""
-describe("Tests de los endpoints de la ruta sessions",()=>{
-    describe("/register POST",()=>{
-        it("Debe registrar un usuario",async()=>{
-            const randomNumber = Math.round(Math.random()*100)
-            emailUser = `juan${randomNumber}@gmail.com`
-            passwordUser = (Math.floor(Math.random()*100000)).toString()
-            const usuario = {
-                first_name:"Juan",
-                last_name:"Gonzalez",
-                email: emailUser,
-                age: Math.floor(Math.random()*50),
-                password: passwordUser
-            }
-            const {statusCode,ok,_body} = await requester.post("/register").send(usuario)
-            expect(statusCode).to.be.equal(200)
-            expect(ok).to.be.true
-            expect(_body.status).to.be.equal("success")
-        })
-    })
-    
-})
+
+const expect = chai.expect;
+const request = supertest('http://localhost:8080');
+
+describe('Sessions Router', () => {
+  it('should create a new session for a user', async () => {
+    const userCredentials = { username: 'user123', password: 'password123' };
+    const response = await request.post('/sessions').send(userCredentials);
+    expect(response.status).to.equal(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('token');
+  });
+
+  it('should return an error for invalid credentials', async () => {
+    const invalidCredentials = { username: 'user123', password: 'wrongpassword' };
+    const response = await request.post('/sessions').send(invalidCredentials);
+    expect(response.status).to.equal(401);
+  });
+
+  it('should get user information after authentication', async () => {
+    const token = 'valid_token'; // Use a valid token obtained from a successful session
+    const response = await request.get('/sessions/user').set('Authorization', `Bearer ${token}`);
+    expect(response.status).to.equal(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('username');
+  });
+});

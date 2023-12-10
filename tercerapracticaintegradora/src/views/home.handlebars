@@ -1,10 +1,12 @@
 
 <div class="contenedor-principal"> 
   <div class="Bienvenido">
-     <p>Bienvenid@ {{user.user.user.first_name}} {{user.user.user.last_name}} a mi Tienda</p>
+    <img src="../../public/image/avatar.png"   alt="Avatar" width="50" height="50" > 
+    <img src="../../public/image/avatar.png"   alt="Avatar" width="50" height="50" > 
+    <p>Bienvenid@ {{user.user.user.first_name}} {{user.user.user.last_name}} a mi Tienda</p>
     <a  id="profile-button" class="btn btn-secondary m-2 ml-10 "  href="/api/users/{{user.user.user._id}}/profile">Ir al perfil</a> 
      {{#if showChangeRole}}
-            <button type="button" class="button-scd change-role-button" id="{{user.user.user._id}}" > Editar y mostrar usuarios</button>
+            <button type="button" class="btn btn-secondary change-role-button m-2" id="{{user.user.user._id}}" > Editar y mostrar usuarios</button>
         {{/if}}
     
   </div> 

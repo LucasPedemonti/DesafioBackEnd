@@ -61,13 +61,20 @@ body {
   flex-direction:column;
   justify-content: center;
   align-items: center;    
-  text-align: center;
-  
+  text-align: center;  
   border-radius: 10px;      
   width:600px;   
     
 }
-.card-container{
+.lista-usuarios{
+  display: flex;
+ flex-direction: column; 
+ text-align: center;
+ justify-content: center;
+ margin-top: 0;
+ background-color: aqua;
+}
+.list-group{ 
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;  
@@ -75,6 +82,23 @@ body {
   padding: 50px;    
   width: 100%;
 }
+ 
+.card-user{  
+  padding: 50px;
+  width: 300px;
+  text-decoration: none;
+  background-color: blue;
+}
+.card-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-direction: row;  
+  font-size: 15px;  
+  padding: 50px;    
+  width: 100%;
+}
+
 .card-title{  
   font-size: 20px;   
 }

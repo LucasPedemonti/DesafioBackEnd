@@ -10,17 +10,18 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col">
+        <div class="lista-usuarios">
             <h2>Lista de Usuarios</h2>
-            <ul class="list-group">
+            <ul class="card-container">
                 {{#each users }}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
+                    <li class="card-container-user">
+                        <div class="card-user">                            
                             <span class="fw-bold">{{first_name}} {{last_name}}</span><br>
                             <span class="text-muted">Email: {{email}}</span><br>
-                            <span class="badge bg-secondary">{{role}}</span>
+                            <span class="badge bg-secondary">{{role}}</span>                                                     
+                            <span>{{role}}</span>
                        </div>
-                        <button type="button" class="btn btn-danger btn-sm button-delete-user" id="{{_id}}">Eliminar</button>
+                        <button type="button" class="button-scd button-delete-user" id="{{_id}}">Eliminar</button>
                     </li>
                 {{/each}}
             </ul>

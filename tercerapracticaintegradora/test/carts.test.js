@@ -6,19 +6,19 @@ const request = supertest('http://localhost:8080');
 
 describe('Carts Router', () => {
   it('should return a user\'s cart', async () => {
-    const cartId = "6570c9fb0db895720cdb5f69";
-    const response = await request.get(`/carts/${cartId}`)   
-    expect(response.body).to.be.an('object')
+    const userId = 1;
+    const response = await request.get(`/carts/${userId}`);
+    expect(response.status).to.equal(200);
+    expect(response.body).to.be.an('object');
   });
 
   it('should add a product to the cart', async () => {
-    const cartId = "6570c9fb0db895720cdb5f69";
-    const productToAdd = { productId: "6536fc30e6e1f250ddc2d41f", quantity: 2 };
-    const response = await request.post(`/carts/${cartId}/add`).send(productToAdd);
-    
+    const userId = 1;
+    const productToAdd = { productId: 1, quantity: 2 };
+    const response = await request.post(`/carts/${userId}/add`).send(productToAdd);
+    expect(response.status).to.equal(200);
     expect(response.body).to.include(productToAdd);
   });
-/*
 
   it('should remove a product from the cart', async () => {
     const userId = 1;
@@ -26,5 +26,5 @@ describe('Carts Router', () => {
     const response = await request.delete(`/carts/${userId}/remove`).send(productToRemove);
     expect(response.status).to.equal(200);
     expect(response.body).to.not.include(productToRemove);
-  });*/
+  });
 });

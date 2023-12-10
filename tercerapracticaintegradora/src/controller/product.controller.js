@@ -1,34 +1,28 @@
-import CustomError from "../services/CustomError.js";
-import EErrors from "../services/enum.js";
-import { generateProductErrorInfo } from "../services/info.js";
-import { productService } from "../repositories/services.js";
+import { productService,userService } from "../repositories/services.js";
+import { sendEmailToPremium } from "../services/mailing.js";
+import notifier from "node-notifier";
 
-////GUARDAR PRODUCTO////*** */
-const 
 
-saveProduct = async (req, res) => {
-    try {
-      const product = req.body;
-      if (!product.name || !product.price  || !product.category || !product.stock || !product.thumbnail ) {
-        throw new CustomError(EErrors.InvalidData, "Los datos del producto son inválidos.");
-      }
-  
-      await productService.createProduct(product);
-      res.send(product);
-    } catch (error) {
-      if (error instanceof CustomError) {
-        const errorInfo = generateProductErrorInfo(error);
-        console.log("Console.log de errorInfo: ", errorInfo);
-        res.status(errorInfo.statusCode).json(errorInfo);
-      } else {
-        console.error("Error no controlado:", error);
-        res.status(500).json({ message: "Error interno del servidor." });
-      }
+////CREAR PRODUCTO////*** */
+const createProduct = async (req, res) => {
+  const productData = req.body;
+  const user = req.user; 
+  try {
+      if (!productData || !productData.name || !productData.description || !productData.price || !productData.category || !productData.stock) {
+      throw new CustomError(EErrors.InvalidData, "Los datos del producto son inválidos.");
     }
-  };
+    productData.owner = user.user.user.email;
+
+    await productService.createProduct(productData);
+    res.send(productData);
+  } catch (error) {
+      res.status(500).json({ message: "Error al crear el producto." });
+   }
+};
   
-  ////OBTENER TODOS LOS PRODUCTOS////*** */
-  const getAllProducts = async (req, res) => {
+ ////OBTENER TODOS LOS PRODUCTOS////*** */
+   ////OBTENER TODOS LOS PRODUCTOS////*** */
+   const getAllProducts = async (req, res) => {
     const products = await productService.getAllProducts();
     const user = req.user;
     const cartId = req.user.user.user.cart;
@@ -37,44 +31,112 @@ saveProduct = async (req, res) => {
     res.render('product', { products: products, user: user, cartId: cartId, showEditButton });
   };
   
+  
 ////OBTENER UN PRODUCTO////*** */
-  const getProductById = async (req, res) => {
-    const pid = req.params.pid;
+const getProductById = async (req, res) => {
+  const pid = req.params.pid;
+  try{
     const productById = await productService.getProductById(pid);
     productById._id = productById._id.toString();
-    res.render('productdetail', productById);
-  };
+    res.render('product-detail', productById);
+
+  } catch (error) {
+  res.status(500).json({ message: "Error obtener un producto." });
+  }
+};
 
 ////OBTENER TODOS LOS PRODUCTOS, LOS MUESTRA AL ADMIN////*** */
-  const getAllProductsForAdmin = async (req, res) => {
+const getAllProductsForAdmin = async (req, res) => {
+  const user=req.user; 
+  try{
     const products = await productService.getAllProducts();
-    res.render('updateproducts', { products: products });
+    res.render('update-products', { products: products,user:user });
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los productos." });
+    }
   };
-  
+
+
 ////OBTENER UN PRODUCTO, LOS MUESTRA AL ADMIN////*** */
-  const getProductByIdForAdmin = async (req, res) => {
-    const pid = req.params.pid;
+const getProductByIdForAdmin = async (req, res) => {
+  const pid = req.params.pid;
+  try{
     const productById = await productService.getProductById(pid);
     productById._id = productById._id.toString();
-  
-    res.render('updateoneproduct', { productById });
+    res.render('update-one-product', productById );
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener el producto." });
+    }
   };
   
-  ////ACTUALIZA UN PRODUCTO////
-  const updateProduct = async (req, res) => {
-    const { pid } = req.params;
-    const productToUpdated = req.body;
-    const productUpdated = await productService.updateProduct(pid, productToUpdated);
-    console.log(productToUpdated);
-    res.send(productUpdated);
+    ////ACTUALIZA UN PRODUCTO////
+    const updateProduct = async (req, res) => {
+      const  pid  = req.params.pid;
+      const productToUpdated = req.body;
+      try{
+        const productUpdated = await productService.updateProduct(pid, productToUpdated);
+        notifier.notify({
+          title: 'Exito',
+          message: 'Producto actualizado',
+        });
+        res.send(productUpdated);
+      } catch (error) {
+        res.status(500).json({ message: "Error al actualizar el producto." });
+        }
+      };
+    
+    //GUARDAR LA IMAGEN DE UN PRODUCTO
+  const uploadImageProduct = async (req, res) => {
+    try {
+      const productId = req.params.pid; 
+      const imagePath = req.file.path;
+      await productService.uploadImageProduct(productId,imagePath);
+         
+      notifier.notify({
+        title: 'Imagen del producto',
+        message: 'Tu imagen fue agregada al prodcuto',
+      });
+         res.redirect(303, `/api/updateproducts`);
+    } catch (error) {
+      
+      res.status(500).json({ error: 'Error interno del servidor al subir la imagen de producto' });
+    }
+     
   };
   
-  ////ELIMINA UN PRODUCTO////**** */
-  const deleteProduct = async (req, res) => {
-    const { pid } = req.params;
-    const productId = await productService.deleteProduct(pid);
-    res.send(productId);
-  };
+    ////ELIMINA UN PRODUCTO////**** */
+    const deleteProduct = async (req, res) => {
+      const { pid } = req.params;
+      const { user } = req;
+      try {
+        const product = await productService.getProductById(pid);
+    
+        if (user.user.user.role === 'admin' || (user.user.user.role === 'premium' && product.owner === user.user.user.email)) {
+          const productDeleted = await productService.deleteProduct(pid);
   
- 
-export {saveProduct,getAllProducts,getProductById, deleteProduct,updateProduct,getAllProductsForAdmin,getProductByIdForAdmin}
+          if (user.user.user.role === 'admin' && product.owner !== user.user.user.email) {
+            await sendEmailToPremium(product.owner); 
+            console.log(`Correo enviado a ${product.owner} sobre la eliminación del producto.`);
+          }
+    
+          notifier.notify({
+            title: 'Exito',
+            message: 'Producto eliminado.'
+          });
+    
+          res.send(productDeleted);
+        } else {
+          notifier.notify({
+            title: 'Permiso denegado',
+            message: 'No tienes permiso para eliminar este producto.'
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Error interno del servidor.');
+      }
+    };
+    
+     
+   
+  export {createProduct,getAllProducts,getProductById, deleteProduct,updateProduct,getAllProductsForAdmin,getProductByIdForAdmin,uploadImageProduct}
