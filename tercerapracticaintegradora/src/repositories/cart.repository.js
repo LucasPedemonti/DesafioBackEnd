@@ -3,10 +3,7 @@ export default class CartRepository {
     this.dao = dao;
   }
   createCart = (cart) => {
-    return this.dao.save(cart);
-  };
-  getAllCarts = () => {
-    return this.dao.getAll();
+    return this.dao.create(cart);
   };
   getCartById = (cid) => {
     return this.dao.getById(cid);
@@ -20,8 +17,17 @@ export default class CartRepository {
   incrementProductQuantity  = (cid, pid) => {
     return this.dao.incrementQuantity(cid, pid);
   };
-  removeProductFromCart = (cid, data) => {
-    return this.dao.removeProduct(cid, data);
+  increaseQuantity  = (cid, pid) => {
+    return this.dao.increase(cid, pid);
+  };
+  decreaseQuantity  = (cid, pid) => {
+    return this.dao.decrease(cid, pid);
+  };
+  removeOneProductInCart = (cid, data) => {
+    return this.dao.removeOneProduct(cid, data);
+  };
+  removeAllProductsInCart = (cid) => {
+    return this.dao.removeAllProducts(cid);
   };
   deleteCart = (cid) => {
     return this.dao.delete(cid);

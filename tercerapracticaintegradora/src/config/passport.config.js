@@ -17,22 +17,24 @@ const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL;
 
 
+const nameCookie = process.env.NAME_COOKIE;
+const secretCookie = process.env.SECRET_COOKIE;
+
 export const cookieExtractor = (req) => {
   let token = null;
   if (req && req.cookies) {
-    token = req.cookies["CoderKeyQueNadieDebeSaber"];
+    token = req.cookies[nameCookie];
   }
   return token;
 };
 
 const initializePassport = () => {
-
    passport.use(
       "jwt",
       new JWTStrategy(
         {
           jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-          secretOrKey: "CoderKeyQueNadieDebeSaber",
+          secretOrKey: secretCookie,
         },
         async (jwt_payload, done) => {
           try {
@@ -54,39 +56,38 @@ const initializePassport = () => {
     );
   
   
-  passport.use(
-    "github",
-    new GitHubStrategy(
-      {
-        clientID: GITHUB_CLIENT_ID,
-        clientSecret: GITHUB_CLIENT_SECRET,
-        callbackURL: GITHUB_CALLBACK_URL,
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        console.log(profile)
-        try {
-          let user = await UserModel.findOne({
-            email: profile?.emails[0]?.value,
-          });
-          if (!user) {
-            const newUser = {
-              first_name: profile.displayName.split(" ")[0],
-              last_name: profile.displayName.split(" ")[1],
+    passport.use(
+      "github",
+      new GitHubStrategy(
+        {
+          clientID: GITHUB_CLIENT_ID,
+          clientSecret: GITHUB_CLIENT_SECRET,
+          callbackURL: GITHUB_CALLBACK_URL,
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            let user = await UserModel.findOne({
               email: profile?.emails[0]?.value,
-              age: 18,
-              password: crypto.randomBytes(20).toString("hex"),
-            };
-            let result = await UserModel.create(newUser);
-            done(null, result);
-          } else {
-            done(null, user);
+            });
+            if (!user) {
+              const newUser = {
+                first_name: profile.displayName.split(" ")[0],
+                last_name: profile.displayName.split(" ")[1],
+                email: profile?.emails[0]?.value,
+                age: 18,
+                password: crypto.randomBytes(20).toString("hex"),
+              };
+              let result = await UserModel.create(newUser);
+              done(null, result);
+            } else {
+              done(null, user);
+            }
+          } catch (err) {
+            done(err, null);
           }
-        } catch (err) {
-          done(err, null);
         }
-      }
-    )
-  );
+      )
+    );
     //estrategia para el registro
     passport.use(
       "register",
@@ -99,7 +100,7 @@ const initializePassport = () => {
           const { first_name, last_name, email, age } = req.body;
           try {
             const user = await UserModel.findOne({ email: username });
-            console.log("user", user);
+            
             if (user) {
                 console.log("El usuario ya existe.");
                 return done(null, false, { message: "Usuario ya existe" });
@@ -109,13 +110,12 @@ const initializePassport = () => {
               last_name,
               age,
               email,    
-              last_connection:null,         
+              last_connection:null,    
               password: createHash(password),
               
 
             };
            
-            console.log("nuevo usuario", newUser);
             let result = await UserModel.create(newUser);
             return done(null, result);
           } catch (error) {
@@ -124,6 +124,7 @@ const initializePassport = () => {
         }
       )
     );
+  
   
 
   

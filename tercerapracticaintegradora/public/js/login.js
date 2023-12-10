@@ -1,4 +1,3 @@
-
 async function postLogin(username, password) {
   console.log(username, password);
   const response = await fetch("/api/session/login", {

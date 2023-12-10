@@ -1,11 +1,7 @@
 import { userService } from "../repositories/services.js";
-import multer from 'multer';
-import notifier from 'node-notifier';
-import { createUserDTO } from "../DTO/userDTO.js"; 
+import { createUserDTO } from "../DTO/userDTO.js";
+import notifier from 'node-notifier'; 
 
-
-// Configuración de Multer para la subida de imágenes de perfil
-//const profileImageUpload = multer({ dest: 'public/upload/profiles/' });
 
 //GUARDAR UN USUARIO////****** */
 const saveUser = async (req, res) => {
@@ -56,7 +52,7 @@ const getAllUsers = async (req, res) => {
   try {
     const allUsers = await userService.getAllUsers(); 
     const userDTOs = allUsers.map(users => createUserDTO(users));
-    res.render('edit-user', { users: userDTOs });
+    res.render('all-users', { users: userDTOs });
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });
   }
@@ -76,7 +72,7 @@ const getUserForChange = async(req,res)=>{
   const uid=req.params.uid;
   const userId = await userService.getUserById(uid);
   const users = await userService.getAllUsers(); 
-  res.render ('edite-users',{userId:userId,users:users})
+  res.render ('edit-users',{userId:userId,users:users})
 };
 
 //CAMBIAR ROL DE USUARIO///////*** */
@@ -106,7 +102,8 @@ const changeRoleUser = async(req,res)=>{
       message: 'El usuario debe cargar los documentos'
     });
 }
-}
+};
+
 //OBTENER USUARIO POR EMAIL///////*** */
 const getUserByEmail = async(req,res)=>{
   const email=req.params.userEmail;
@@ -178,31 +175,16 @@ const getProfile =async(req,res)=>{
 // };
 
 //ELIMINAR USUARIO
-const deleterUser =async(req,res)=>{
+const deleteUser =async(req,res)=>{
   const userId =req.params.uid;
-  const usertodelete = await userService.deleteUser(userId);
+  await userService.deleteUser(userId);
   notifier.notify({
     title: 'Exito',
     message: 'Usuario eliminado',
   });
   return;
 }
-const deleteUser = async (req, res) => {
-  const userId = req.params.uid;
-  console.log(userId);
-  try {
-    // Call the userService method to delete the user
-    await userService.deleteUser(userId);
-    notifier.notify({
-      title: 'Éxito',
-      message: 'Usuario eliminado',
-    });
-    res.status(200).send('Usuario eliminado con éxito');
-  } catch (error) {
-    console.error("Error al eliminar el usuario:", error);
-    res.status(500).send('Error al eliminar el usuario');
-  }
-};
+
 export {saveUser,
   getAllUsers,
   getUserById,

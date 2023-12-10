@@ -6,15 +6,17 @@ import bcrypt from 'bcrypt';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 import {faker} from '@faker-js/faker';
+import dotenv from 'dotenv';
 
 
+dotenv.config()
 
+const secretCookie =process.env.SECRET_COOKIE;
 
-const PRIVATE_KEY = "CoderKeyQueNadieDebeSaber";
 
 export const generateToken = (user) => {
   console.log("generar token ",user)
-  const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "1h" });
+  const token = jwt.sign({ user }, secretCookie, { expiresIn: "2h" });
   return token;
 };
 
@@ -25,7 +27,7 @@ export const authToken = (req, res, next) => {
 
   // const token = authHeader.split(" ")[1];
 
-  jwt.verify(authHeader, PRIVATE_KEY, (err, user) => {
+  jwt.verify(authHeader, secretCookie, (err, user) => {
     if (err) res.status(401).json({ error: "Token invalido" });
 
     req.user = user;

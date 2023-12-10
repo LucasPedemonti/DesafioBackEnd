@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
+import { deleteInactiveUsers } from '../src/services/mailing.js';
+
 import * as dotenv from "dotenv";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
@@ -28,19 +30,22 @@ import MockingRouter from "./routes/mocking.routes.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 
-
+import path from "path";
 import {__dirname} from "./utils.js";
 import { loggerMiddleware } from "./logger.js";
 import LoggerRouter from "./routes/loggertest.routes.js"
+import cors from 'cors';
+const secretCookie = process.env.SECRET_COOKIE;
 
 dotenv.config();
 const app = express();
 const httpServer = createServer(app);
-app.use(cookieParser("C0d3rS3cr3t"));
+app.use(cookieParser(secretCookie));
 
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT || 8080;
 
+app.use(cors());
 //SwaggerOptions
 const swaggerOptions = {
   definition: {
@@ -81,7 +86,7 @@ app.use(
       },
       ttl: 10,
     }),
-    secret: "codersecret",
+    secret: secretCookie,
     resave: false,
     saveUninitialized: false,
   })
