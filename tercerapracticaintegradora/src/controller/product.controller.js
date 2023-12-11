@@ -3,7 +3,8 @@ import { sendEmailToPremium } from "../services/mailing.js";
 import notifier from "node-notifier";
 
 
-////CREAR PRODUCTO////*** */
+
+//CREAR PRODUCTO
 const createProduct = async (req, res) => {
   const productData = req.body;
   const user = req.user; 

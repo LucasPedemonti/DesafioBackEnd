@@ -6,8 +6,8 @@ function moveToChangeRole(event) {
   event.preventDefault();
   const uid = event.target.id;
 
-  fetch(`/api/users/admin/${uid}`, {
-    method: 'GET',
+  fetch(`/api/user/admin/${uid}`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -15,7 +15,7 @@ function moveToChangeRole(event) {
   })
   .then(response => {
     if (response.ok) {
-      window.location.href = `/api/users/admin/${uid}`;
+      window.location.href = `/api/user/admin/6535d11650469334680883f8`;
     } else {
       throw new Error('Error al ir a modificar rol');
     }
@@ -35,7 +35,7 @@ changeUserForm.addEventListener('submit', async (event) => {
   const userEmail = document.getElementById('userEmail').value;
 
   try {
-    const response = await fetch(`/api/users/byemail/${userEmail}`, {
+    const response = await fetch(`/api/user/byemail/${userEmail}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ changeUserForm.addEventListener('submit', async (event) => {
     if (response.ok) {
       const uid = await response.json();
 
-      const updateResponse = await fetch(`/api/users/admin/${uid}`, {
+      const updateResponse = await fetch(`/api/user/admin/${uid}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ document.querySelectorAll('.button-delete-user').forEach(button => {
   event.preventDefault();
   const uid = event.target.id;
   
-  fetch(`/api/users/${uid}`, {
+  fetch(`/api/user/${uid}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

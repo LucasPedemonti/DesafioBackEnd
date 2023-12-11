@@ -20,13 +20,33 @@ body {
 }
 .Bienvenido{
   display: flex;
+  flex-direction: column;
   text-align: center;
   justify-content: center;
+  align-items: center;
   margin-bottom: 40px;
   font-weight: 500;  
-  height: 40px;
+  height:100px;
   font-size: 20px;
   border: 1px solid gray; 
+}
+.profile-button{
+  background:none;
+  padding: 8px 15px;
+  font-size: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 100px;
+  width: 150px;
+  margin: 2px;  
+  color:#010300;  
+  box-shadow: 0 5px 10px rgb(0,0,0,.6);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  transition: 0.6s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none; 
 }
 .Prod{
   display: flex;
@@ -71,8 +91,7 @@ body {
  flex-direction: column; 
  text-align: center;
  justify-content: center;
- margin-top: 0;
- background-color: aqua;
+ margin-top: 0; 
 }
 .list-group{ 
   display: flex;
@@ -80,21 +99,28 @@ body {
   flex-direction: row;  
   font-size: 15px;  
   padding: 50px;    
-  width: 100%;
+  width: 100%;  
 }
  
 .card-user{  
   padding: 50px;
-  width: 300px;
-  text-decoration: none;
-  background-color: blue;
+  width: 300px;  
+  border: 1px solid rgba(3, 59, 17, 0.644);
+  border-radius: 30px;
+  height: 250px;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  
 }
 .card-container{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   flex-direction: row;  
+  list-style: none;
   font-size: 15px;  
+  text-decoration: none;
   padding: 50px;    
   width: 100%;
 }
@@ -274,6 +300,7 @@ input[type="password"] {
 .boton:hover::before{
   height: 180%;
 }
+
 .button-scd{
   background:none;
   padding: 8px 15px;
@@ -308,7 +335,7 @@ input[type="password"] {
 .button-scd:hover::before{
   height: 180%;
 }
-
+.a-avatar,
 .a-forgot,
 .a-signup{
   text-decoration: none; 

@@ -11,7 +11,7 @@ router.post ("/",passportCall('jwt') , createProduct);
 router.delete("/:pid",passportCall('jwt') ,deleteProduct);
 router.get ("/:pid",passportCall('jwt') ,getProductByIdForAdmin);
 router.put("/:pid",passportCall('jwt') , updateProduct);
-router.post('/:pid', uploadProductImage.single('products'), uploadImageProduct);
+//router.post('/:pid', uploadProductImage.single('products'), uploadImageProduct);
 
 
 export default router;

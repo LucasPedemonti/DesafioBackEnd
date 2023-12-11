@@ -1,13 +1,13 @@
 <div class= "contenedor-principal"> 
 <div class="upd-new">  
 <h3>Crear Nuevo Producto</h3>
-
+<p>Usuario Admin: {{user.user.user.email}}</p>
     <!-- Formulario para crear un nuevo producto -->
-    <form id="createProductForm" action="/api/updateproducts" method="post" enctype="multipart/form-data ">
+    <form id="createProductForm" action="/api/updateproducts" method="post" enctype="multipart/form-data">
   <label for="name">Nombre:</label>
   <input type="text" id="name" name="name" required><br>
 
-  <label for="description">Descripción:</label>
+  <label for="description">Descripción:</label><br>
   <textarea id="description" name="description" required></textarea><br>
 
   <label for="price">Precio:</label>
@@ -16,12 +16,13 @@
   <label for="category">Categoría:</label>
   <input type="text" id="category" name="category" required><br>
 
-  
+  <label for="thumbnail">URL:</label>
+  <input type="text" id="thumbnail" name="thumbnail" required><br>
 
   <label for="stock">Disponibilidad:</label>
   <input type="number" id="stock" name="stock" required><br>
 
-  <button type="submit" class="button-scd" id="createProductButton" data-user-id="{{user.user.user._id}}">Crear Producto</button>
+  <button type="submit" class="button-scd  createProductButton" id="createProductButton" data-user-id="{{user.user.user._id}}">Crear Producto</button>
 </form>
 
 </div>
@@ -39,7 +40,7 @@
                 <img class="prod-img" src="{{thumbnail}}" alt="">
 
                 <!-- Botón para actualizar el producto -->
-                <button class="button-scd button-to-update-product" id="{{this._id}}"  >Actualizar</button> 
+                <button class="button-scd button-to-update-product" id="{{this._id}}">Actualizar</button> 
 
                 <!-- Botón para eliminar el producto -->
                 <button class="button-scd button-delete-product" id="{{this._id}}">Eliminar</button>

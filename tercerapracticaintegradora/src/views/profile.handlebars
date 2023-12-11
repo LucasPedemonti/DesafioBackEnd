@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil de Usuario</title>
-</head>
-<body>
-  <h1>Bienvenido, {{user.first_name}} {{user.last_name}}!</h1>
-  <p>Correo Electrónico: {{user.email}}</p>
-  <p>Edad: {{user.age}}</p>
 
-  <a href="/logout">Cerrar Sesión</a>
-</body>
-</html>
+<div class="cart-container">
+    <a class="button-scd" href="/api/products">Volver a la tienda</a>  
+    
+    <h3>Usuario: {{first_name}}</h3>
+    <h3>Email: {{email}}</h3>
+      
+    <h4 class="mt-4">Cargar Avatar</h4>
+    <form   action="/api/users/{{_id}}/upload-avatar" method="POST" enctype="multipart/form-data">
+      <input type="file" name="profiles" class="form-control mt-2">
+      <button type="submit" class="button-scd">Subir</button>
+    </form>
+  
+    <h4 class="mt-5">Subir documentos</h4>
+    <form action="/api/users/{{_id}}/upload-documents" method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="documentType" class="form-label">Seleccione el tipo de documento:</label>
+    <select id="documentType" name="documentType" class="form-select"> 
+      <option value="identification">Identificación</option>
+      <option value="addressProof">Comprobante de domicilio</option>
+      <option value="bankStatement">Comprobante de estado de cuenta</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="file" class="form-label">Seleccione el archivo:</label>
+    <input type="file" name="documents" accept=".pdf, .doc, .docx, .jpg, .png" class="form-control">
+  </div>
+
+  <button type="submit" class="button-scd">Subir Documento</button>
+</form>
+
+</div>

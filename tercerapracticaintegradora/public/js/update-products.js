@@ -9,16 +9,20 @@ createProductForm &&
     const description = document.getElementById("description").value;
     const price = parseFloat(document.getElementById("price").value);
     const category = document.getElementById("category").value;
-    
+    const thumbnail = document.getElementById("thumbnail").value;
     const stock = parseInt(document.getElementById("stock").value);
 
+    // Obtiene el ID del usuario desde el botón
+    const ownerId = document.getElementById("createProductButton").getAttribute("data-user-id");
+    
     const nuevoProducto = {
       name,
       description,
       price,
       category,
-      
+      thumbnail,
       stock,
+      owner: ownerId, // Establece el ID del usuario como el valor de 'owner
     };
 
     // Realiza una solicitud POST al servidor para crear el producto

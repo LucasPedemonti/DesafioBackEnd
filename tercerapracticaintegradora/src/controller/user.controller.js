@@ -1,8 +1,8 @@
 import { userService } from "../repositories/services.js";
 import { createUserDTO } from "../DTO/userDTO.js";
 import notifier from 'node-notifier'; 
-
-
+import { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 //GUARDAR UN USUARIO////****** */
 const saveUser = async (req, res) => {
     const { first_name, last_name, email, age, password } = req.body;
@@ -61,10 +61,15 @@ const getAllUsers = async (req, res) => {
 
 
  //OBTENER USUARIO POR ID///////*** */
-const getUserById = async(req,res)=>{
-    const uid=req.params.uid;
-    const userId = await userService.getUserById(uid);
-    res.send (userId)
+ const getUserById = async (req, res) => {
+  const uid = req.params.uid;
+  
+  if (!mongoose.Types.ObjectId.isValid(uid)) {
+    return res.status(400).json({ error: 'ID de usuario no válido' });
+  }
+
+  const userId = await userService.getUserById(uid);
+  res.send(userId);
 }
 
 //OBTENER USUARIO POR ID PARA CAMBIAR ROL///////*** */

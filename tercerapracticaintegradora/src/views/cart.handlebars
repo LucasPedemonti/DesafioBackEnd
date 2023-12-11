@@ -42,22 +42,16 @@
               </ul>
             {{/each}}
               <div class="card-body">
-          <!-- Botón para finalizar proceso de compra -->
-          {{#unless isEmptyCart}}
-            <button type="button" 
-            class="button-scd button-finish-purchase" 
-            id="{{cart._id}}">Finalizar proceso de compra</button>
-          {{/unless}}                    
+                <!-- Botón para finalizar proceso de compra -->
+                {{#unless isEmptyCart}}
+                  <button type="button" class="button-scd button-finish-purchase" id="{{cart._id}}">Finalizar proceso de compra</button>
+                {{/unless}}                    
 
-          <!-- Botón para vaciar todo el carrito -->
-          {{#unless isEmptyCart}}
-          <button
-            type="button"
-            class="button-scd"
-            id="{{cart._id}}"
-          > Vaciar Carrito</button>
-          {{/unless}}
-        </div>
+                <!-- Botón para vaciar todo el carrito -->
+                {{#unless isEmptyCart}}
+                <button type="button" class="button-scd  button-empty-cart" id="{{cart._id}}"> Vaciar Carrito</button>
+                {{/unless}}
+              </div>
 
            
             <!-- Total del carrito -->

@@ -1,0 +1,48 @@
+<div class="cart-container">
+    <div class="row">
+        <div class="col">  
+            <a type="button" class="button-scd"   href="/api/products">Volver a ver a la tienda</a>
+            <a type="button" class="button-scd"   href="/api/user">Volver a ver a todos los usuarios</a>                         
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <h2>Actualizar Rol de Usuario</h2>
+            <form id="update-role-user-form" method="POST">
+                <div class="mb-3">
+                    <label for="userEmail" class="form-label">Correo Electrónico del Usuario:</label>
+                    <input type="email" class="form-control" name="userEmail" id="userEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="newRole" class="form-label">Nuevo Rol:</label>
+                    <select class="form-select" name="newRole" id="newRole">
+                        <option value="user">User</option>
+                        <option value="premium">Premium</option>
+                    </select>
+                </div>
+                 <button type="submit" class="button-scd change-role-button">Actualizar Rol</button>
+            </form>
+        </div>
+    </div> 
+    <div class="row mt-4">
+        <div class="lista-usuarios">
+            <h2>Lista de Usuarios</h2>
+            <ul class="card-container">
+                {{#each users }}
+                    <li class="card-container-user">
+                        <div class="card-user">                            
+                            <span class="fw-bold">{{first_name}} {{last_name}}</span><br>
+                            <span class="fw-bold">{{_id}} </span><br>
+                            <span class="fw-bold"></span>Email: {{email}}</span><br>
+                            <span class="fw-bold">Role: {{role}}</span>   <br>                                                  
+                            <span class="fw-bold">Ultima conexión:{{last_connection}}</span><br>
+                       </div>
+                        <button type="button" class="button-scd button-delete-user" id="{{_id}}">Eliminar</button>                        
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>   
+</div>
+
+<script src="/js/edit-user.js"></script>

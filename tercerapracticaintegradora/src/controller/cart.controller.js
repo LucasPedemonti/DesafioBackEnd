@@ -33,7 +33,7 @@ const getCartById = async (req, res) => {
           description: product.product.description,
           price: product.product.price,
           category: product.product.category,
-          availability: product.product.availability,
+          stock: product.product.stock,
           quantity: product.quantity,
         };
       }),
@@ -138,7 +138,7 @@ const generatedTicket = async (req, res) => {
         continue;
       }
 
-      if (product.availability < quantity) {
+      if (product.stock < quantity) {
         productsNotPurchased.push({
           productId,
           reason: "Disponibilidad insuficiente",
@@ -146,7 +146,7 @@ const generatedTicket = async (req, res) => {
         continue;
       }
 
-      product.availability -= quantity;
+      product.stock -= quantity;
       await productService.updateProduct(productId, product);
       await cartService.removeAllProductsInCart(cid, product.id);
     }
@@ -190,7 +190,7 @@ const emptyCart = async (req,res) => {
     if (!existingCart) {
       return res.status(500).json({message:'Error no se encontro el carrito'});
     }
-    await cartService.removeAllProductsFromCart(cid);
+    await cartService.removeAllProductsInCart(cid);
     return  res.status(200).json({message:'Productos eliminados del carrito'});;
   } catch (error) {
     return res.status(500).json({message:'No se pudieron eliminar los productos del carrito'});
